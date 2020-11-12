@@ -1,162 +1,87 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/natefinch/lumberjack"
+	"BBS/dao/mysql"
+	"BBS/dao/redis"
+	"BBS/logger"
+	"BBS/pkg/snowflake"
+	"BBS/routes"
+	"BBS/settings"
+	"context"
+	"fmt"
+	"github.com/spf13/viper"
 	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
-	"net"
+	"log"
 	"net/http"
-	"net/http/httputil"
 	"os"
-	"runtime/debug"
-	"strings"
+	"os/signal"
+	"syscall"
 	"time"
 )
-var logger *zap.Logger
-var sugarLogger *zap.SugaredLogger
-
-
-func InitLogger() *zap.Logger {
-	writeSyncer := getLogWriter()
-	encoder := getEncoder()
-	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
-
-	logger := zap.New(core,zap.AddCaller())
-	return logger
-}
-
-func getEncoder() zapcore.Encoder {
-	encoderConfig := zapcore.EncoderConfig{
-		TimeKey:        "ts",
-		LevelKey:       "level",
-		NameKey:        "logger",
-		CallerKey:      "caller",
-		FunctionKey:    zapcore.OmitKey,
-		MessageKey:     "msg",
-		StacktraceKey:  "stacktrace",
-		LineEnding:     zapcore.DefaultLineEnding,
-		EncodeLevel:    zapcore.LowercaseLevelEncoder,
-		EncodeTime:     zapcore.ISO8601TimeEncoder,
-		EncodeDuration: zapcore.SecondsDurationEncoder,
-		EncodeCaller:   zapcore.ShortCallerEncoder,
-	}
-
-	return zapcore.NewConsoleEncoder(encoderConfig)
-}
-
-//func getLogWriter() zapcore.WriteSyncer {
-//	file, _ := os.OpenFile("./test.log",os.O_CREATE|os.O_APPEND|os.O_RDWR,0744)
-//	return zapcore.AddSync(file)
-//}
 
 func main() {
-	logger = InitLogger()
-	router := gin.New()
-	router.Use(GinLogger(logger),GinRecovery(logger,true))
-
-	// 此 handler 将匹配 /user/john 但不会匹配 /user/ 或者 /user
-	router.GET("/user/:name", func(c *gin.Context) {
-		name := c.Param("name")
-		c.String(http.StatusOK, "Hello %s", name)
-	})
-
-	// 此 handler 将匹配 /user/john/ 和 /user/john/send
-	// 如果没有其他路由匹配 /user/john，它将重定向到 /user/john/
-	router.GET("/user/:name/*action", func(c *gin.Context) {
-		name := c.Param("name")
-		action := c.Param("action")
-		message := name + " is " + action
-		c.String(http.StatusOK, message)
-	})
-
-	router.Run(":8080")
-}
-
-// GinLogger 接收gin框架默认的日志
-func GinLogger(logger *zap.Logger) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		start := time.Now()
-		path := c.Request.URL.Path
-		query := c.Request.URL.RawQuery
-		c.Next()
-
-		cost := time.Since(start)
-		logger.Info(path,
-			zap.Int("status", c.Writer.Status()),
-			zap.String("method", c.Request.Method),
-			zap.String("path", path),
-			zap.String("query", query),
-			zap.String("ip", c.ClientIP()),
-			zap.String("user-agent", c.Request.UserAgent()),
-			zap.String("errors", c.Errors.ByType(gin.ErrorTypePrivate).String()),
-			zap.Duration("cost", cost),
-		)
+	//1. 加载配置
+	if err := settings.Init(); err != nil{
+		fmt.Printf("init settings failed,%#v\n",err)
+		return
 	}
+	//2. 初始化日志
+	if err := logger.Init(); err != nil{
+		fmt.Printf("init settings failed,%#v\n",err)
+		return
+	}
+	defer zap.L().Sync()
+	zap.L().Debug("logger init success")
+	//3. 初始化Mysql
+	if err := mysql.Init(settings.Conf.MySQLConfig); err != nil{
+		fmt.Printf("mysql init settings failed,%#v\n",err)
+		return
+	}
+	defer mysql.Close()
+	//4. 初始化Redis
+	if err := redis.Init(settings.Conf.RedisConfig); err != nil{
+		fmt.Printf("redis init settings failed,%#v\n",err)
+		return
+	}
+	defer redis.Close()
+	if err := snowflake.Init(settings.Conf.StartTime,settings.Conf.MachineID);err != nil {
+		fmt.Printf("snowflake init settings failed,%#v\n",err)
+		return
+	}
+	//5. 注册路由
+	r := routes.Setup()
+
+	//6. 启动服务 (优雅关机)
+
+	srv := &http.Server{
+		Addr:    fmt.Sprintf(":%d",viper.GetInt("app.port")),
+		Handler: r,
+	}
+
+	go func() {
+		// 开启一个goroutine启动服务
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("listen: %s\n", err)
+		}
+	}()
+
+	// 等待中断信号来优雅地关闭服务器，为关闭服务器操作设置一个5秒的超时
+	quit := make(chan os.Signal, 1) // 创建一个接收信号的通道
+	// kill 默认会发送 syscall.SIGTERM 信号
+	// kill -2 发送 syscall.SIGINT 信号，我们常用的Ctrl+C就是触发系统SIGINT信号
+	// kill -9 发送 syscall.SIGKILL 信号，但是不能被捕获，所以不需要添加它
+	// signal.Notify把收到的 syscall.SIGINT或syscall.SIGTERM 信号转发给quit
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)  // 此处不会阻塞
+	<-quit  // 阻塞在此，当接收到上述两种信号时才会往下执行
+	zap.L().Info("Shutdown Server ...")
+	// 创建一个5秒超时的context
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	// 5秒内优雅关闭服务（将未处理完的请求处理完再关闭服务），超过5秒就超时退出
+	if err := srv.Shutdown(ctx); err != nil {
+		zap.L().Fatal("Server Shutdown: ", zap.Error(err))
+	}
+
+	zap.L().Info("Server exiting")
 }
 
-// GinRecovery recover掉项目可能出现的panic
-func GinRecovery(logger *zap.Logger, stack bool) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		defer func() {
-			if err := recover(); err != nil {
-				// Check for a broken connection, as it is not really a
-				// condition that warrants a panic stack trace.
-				var brokenPipe bool
-				if ne, ok := err.(*net.OpError); ok {
-					if se, ok := ne.Err.(*os.SyscallError); ok {
-						if strings.Contains(strings.ToLower(se.Error()), "broken pipe") || strings.Contains(strings.ToLower(se.Error()), "connection reset by peer") {
-							brokenPipe = true
-						}
-					}
-				}
-
-				httpRequest, _ := httputil.DumpRequest(c.Request, false)
-				if brokenPipe {
-					logger.Error(c.Request.URL.Path,
-						zap.Any("error", err),
-						zap.String("request", string(httpRequest)),
-					)
-					// If the connection is dead, we can't write a status to it.
-					c.Error(err.(error)) // nolint: errcheck
-					c.Abort()
-					return
-				}
-
-				if stack {
-					logger.Error("[Recovery from panic]",
-						zap.Any("error", err),
-						zap.String("request", string(httpRequest)),
-						zap.String("stack", string(debug.Stack())),
-					)
-				} else {
-					logger.Error("[Recovery from panic]",
-						zap.Any("error", err),
-						zap.String("request", string(httpRequest)),
-					)
-				}
-				c.AbortWithStatus(http.StatusInternalServerError)
-			}
-		}()
-		c.Next()
-	}
-}
-func getLogWriter() zapcore.WriteSyncer {
-	lumberJackLogger := &lumberjack.Logger{
-		Filename:   "./test.log",
-		MaxSize:    1, //M
-		MaxBackups: 5,  //最大备份数量
-		MaxAge:     30, //最大天数
-		Compress:   false, //是否压缩
-	}
-	return zapcore.AddSync(lumberJackLogger)
-}
-func simpleHttpGet(url string){
-	resp,err := http.Get(url)
-	if err != nil {
-		sugarLogger.Error("Error fetchong url",zap.String("url",url),zap.Error(err))
-	}else{
-		sugarLogger.Info("success ..",zap.String("statuscode",resp.Status),zap.String("url",url))
-		resp.Body.Close()
-	}
-}

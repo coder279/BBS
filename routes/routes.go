@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"BBS/logger"
+	"BBS/controllers"
 )
 
 func Setup()*gin.Engine{
@@ -12,5 +13,6 @@ func Setup()*gin.Engine{
 	r.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK,"ok")
 	})
+	r.POST("/signip" , controllers.SignUp)
 	return r
 }

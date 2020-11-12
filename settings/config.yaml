@@ -26,3 +26,6 @@ redis:
   password: ""
   pool_size: 100
 
+start_time: "2020-11-11"
+machine_id: 1
+
