@@ -52,3 +52,13 @@
 {"level":"INFO","time":"2020-11-15T11:22:18.805+0800","caller":"logger/logger.go:66","msg":"/signup","status":200,"method":"POST","path":"/signup","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0}
 {"level":"INFO","time":"2020-11-15T11:23:35.627+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}
 {"level":"INFO","time":"2020-11-15T11:23:35.629+0800","caller":"BBS/main.go:90","msg":"Server exiting"}
+{"level":"DEBUG","time":"2020-11-15T11:23:42.670+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"INFO","time":"2020-11-15T11:23:43.433+0800","caller":"logger/logger.go:66","msg":"/signup","status":200,"method":"POST","path":"/signup","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0149578}
+{"level":"INFO","time":"2020-11-15T11:24:06.795+0800","caller":"logger/logger.go:66","msg":"/signup","status":200,"method":"POST","path":"/signup","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0019951}
+{"level":"INFO","time":"2020-11-15T11:36:13.528+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2020-11-15T11:36:13.529+0800","caller":"BBS/main.go:90","msg":"Server exiting"}
+{"level":"DEBUG","time":"2020-11-15T11:36:20.367+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"INFO","time":"2020-11-15T11:36:23.954+0800","caller":"logger/logger.go:75","msg":"/signup","status":200,"method":"POST","path":"/signup","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0019944}
+{"level":"INFO","time":"2020-11-15T11:37:35.640+0800","caller":"logger/logger.go:75","msg":"/signup","status":200,"method":"POST","path":"/signup","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0009971}
+{"level":"INFO","time":"2020-11-15T11:37:40.941+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2020-11-15T11:37:40.943+0800","caller":"BBS/main.go:90","msg":"Server exiting"}

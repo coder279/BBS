@@ -1,6 +1,6 @@
 app:
   name: "web_app"
-  mode: "dev"
+  mode: "realease"
   port: 8081
 
 log:
