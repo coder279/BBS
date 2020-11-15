@@ -1,6 +1,7 @@
 package main
 
 import (
+	"BBS/controllers"
 	"BBS/dao/mysql"
 	"BBS/dao/redis"
 	"BBS/logger"
@@ -48,9 +49,13 @@ func main() {
 		fmt.Printf("snowflake init settings failed,%#v\n",err)
 		return
 	}
+	//初始化gin框架内置的校验器使用翻译器
+	if err := controllers.InitTrans("zh");err != nil {
+		fmt.Printf("init init trans failed,err:%v\n",err)
+		return
+	}
 	//5. 注册路由
 	r := routes.Setup()
-
 	//6. 启动服务 (优雅关机)
 
 	srv := &http.Server{

@@ -13,6 +13,6 @@ func Setup()*gin.Engine{
 	r.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK,"ok")
 	})
-	r.POST("/signip" , controllers.SignUp)
+	r.POST("/signup" , controllers.SignUpHandler)
 	return r
 }
