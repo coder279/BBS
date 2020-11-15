@@ -3,7 +3,9 @@ package mysql
 import (
 	"BBS/models"
 	"crypto/md5"
+	"database/sql"
 	"encoding/hex"
+	"errors"
 )
 
 const secret = "lichen.com"
@@ -18,8 +20,21 @@ func CheckUserExist(username string)(bool,error){
 	return count > 0,nil
 }
 
-func QueryUserByUsername(){
-
+func QueryUserByUsername(user *models.User)(err error){
+	oPassword := user.Password
+	sqlstr := `select user_id,username,password from user where username = ?`
+	err = db.Get(user,sqlstr,user.Username)
+	if err == sql.ErrNoRows{
+		return errors.New("用户不存在")
+	}
+	if err != nil {
+		return err
+	}
+	password := encryptPassword(string([]byte(oPassword)))
+	if(password != user.Password){
+		return errors.New("密码错误")
+	}
+	return
 }
 //InsertUser 对用户数据执行入库操作
 func InsertUser(user *models.User)(err error){
