@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"go.uber.org/zap"
-	"net/http"
 )
 
 func SignUpHandler(c *gin.Context){
@@ -17,30 +16,21 @@ func SignUpHandler(c *gin.Context){
 		zap.L().Error("Signup with invalid param",zap.Error(err))
 		errs,ok := err.(validator.ValidationErrors)
 		if !ok{
-			c.JSON(http.StatusOK,gin.H{
-				"msg":err.Error(),
-			})
+			ResponseError(c,CodeInvalidParams)
 			return
 		}
-		c.JSON(http.StatusOK,gin.H{
-			"msg":removeTopStruct(errs.Translate(trans)),
-		})
+		ResponseErrorWithMsg(c,CodeInvalidParams,removeTopStruct(errs.Translate(trans)))
 		return
 	}
 	fmt.Println(p)
 	//2. 业务处理
 	err := logic.Signup(&p)
 	if(err != nil ){
-		c.JSON(http.StatusOK,gin.H{
-			"error":1,
-			"msg":err.Error(),
-		})
+		ResponseError(c,CodeInvalidParams)
 		return
 	}
 	//3. 返回响应
-	c.JSON(http.StatusOK,gin.H{
-		"msg":"success",
-	})
+	ResponseSuccess(c,CodeSuccess)
 }
 
 func LoginHandler(c *gin.Context){
@@ -50,28 +40,21 @@ func LoginHandler(c *gin.Context){
 		zap.L().Error("Login with invalid param", zap.Error(err))
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			c.JSON(http.StatusOK, gin.H{
-				"msg": err.Error(),
-			})
+			ResponseErrorWithMsg(c,CodeInvalidParams,err.Error())
 			return
 		}
-		c.JSON(http.StatusOK, gin.H{
-			"msg": removeTopStruct(errs.Translate(trans)),
-		})
-	}
-	//数据比对
-	err := logic.Login(&p)
-	if err != nil {
-		c.JSON(http.StatusOK,gin.H{
-			"error":1,
-			"msg":err.Error(),
-		})
+		ResponseErrorWithMsg(c,CodeInvalidParams,removeTopStruct(errs.Translate(trans)))
 		return
 	}
+	//数据比对
+	token,err := logic.Login(&p)
+	if err != nil {
+		ResponseErrorWithMsg(c,CodeInvalidParams,err.Error())
+		return
+	}
+	var sign = make(map[string]string)
+	sign["token"] = token
 	//3.响应结果
-	c.JSON(http.StatusOK,gin.H{
-		"error":0,
-		"msg":"登陆成功",
-	})
+	ResponseSuccess(c,sign)
 	return
 }

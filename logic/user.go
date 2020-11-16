@@ -3,6 +3,7 @@ package logic
 import (
 	"BBS/dao/mysql"
 	"BBS/models"
+	"BBS/pkg/jwt"
 	"BBS/pkg/snowflake"
 	"errors"
 )
@@ -32,14 +33,15 @@ func Signup(p *models.ParamSignUp)(err error){
 	return
 }
 
-func Login(p *models.ParamLogin)(err error){
+func Login(p *models.ParamLogin)(token string,err error){
 	user := &models.User{
 		Username:p.Username,
 		Password:p.Password,
 	}
 	err = mysql.QueryUserByUsername(user)
 	if err != nil {
-		return err
+		return "",err
 	}
-	return
+	 token, _, err = jwt.GenToken(user.UserID)
+	return token,nil
 }
