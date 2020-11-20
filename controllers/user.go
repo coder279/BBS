@@ -52,9 +52,7 @@ func LoginHandler(c *gin.Context){
 		ResponseErrorWithMsg(c,CodeInvalidParams,err.Error())
 		return
 	}
-	var sign = make(map[string]string)
-	sign["token"] = token
 	//3.响应结果
-	ResponseSuccess(c,sign)
+	ResponseSuccess(c,token)
 	return
 }
