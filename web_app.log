@@ -271,3 +271,55 @@
 {"level":"DEBUG","time":"2020-11-20T08:33:57.965+0800","caller":"BBS/main.go:35","msg":"logger init success"}
 {"level":"INFO","time":"2020-11-20T09:20:26.486+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}
 {"level":"INFO","time":"2020-11-20T09:20:26.486+0800","caller":"BBS/main.go:90","msg":"Server exiting"}
+{"level":"DEBUG","time":"2020-11-22T08:53:16.463+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"ERROR","time":"2020-11-22T08:53:16.524+0800","caller":"mysql/mysql.go:19","msg":"connect DB failed, err:","error":"Error 1049: Unknown database 'bluebell'"}
+{"level":"DEBUG","time":"2020-11-22T08:53:34.163+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"ERROR","time":"2020-11-22T08:53:34.200+0800","caller":"mysql/mysql.go:19","msg":"connect DB failed, err:","error":"Error 1049: Unknown database 'bluebell'"}
+{"level":"DEBUG","time":"2020-11-22T08:54:26.694+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"ERROR","time":"2020-11-22T08:54:26.813+0800","caller":"mysql/mysql.go:19","msg":"connect DB failed, err:","error":"Error 1049: Unknown database 'bluebell'"}
+{"level":"DEBUG","time":"2020-11-22T08:54:41.998+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"ERROR","time":"2020-11-22T08:54:42.025+0800","caller":"mysql/mysql.go:19","msg":"connect DB failed, err:","error":"Error 1049: Unknown database 'bluebell'"}
+{"level":"DEBUG","time":"2020-11-22T08:55:35.531+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"INFO","time":"2020-11-22T08:56:05.357+0800","caller":"logger/logger.go:75","msg":"/api/v1/login","status":200,"method":"POST","path":"/api/v1/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0019967}
+{"level":"INFO","time":"2020-11-22T08:56:40.270+0800","caller":"logger/logger.go:75","msg":"/api/v1/login","status":200,"method":"POST","path":"/api/v1/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0009972}
+{"level":"INFO","time":"2020-11-22T08:56:49.802+0800","caller":"logger/logger.go:75","msg":"/api/v1/signup","status":200,"method":"POST","path":"/api/v1/signup","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0049867}
+{"level":"INFO","time":"2020-11-22T08:56:54.995+0800","caller":"logger/logger.go:75","msg":"/api/v1/login","status":200,"method":"POST","path":"/api/v1/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0}
+{"level":"INFO","time":"2020-11-22T08:57:11.284+0800","caller":"logger/logger.go:75","msg":"/api/v1/post","status":200,"method":"POST","path":"/api/v1/post","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0059833}
+{"level":"ERROR","time":"2020-11-22T08:58:30.791+0800","caller":"controllers/post.go:46","msg":"logic GetPostById(pid) failed","error":"missing destination name create_time in *models.Post"}
+{"level":"INFO","time":"2020-11-22T08:58:30.791+0800","caller":"logger/logger.go:75","msg":"/api/v1/post/1","status":200,"method":"GET","path":"/api/v1/post/1","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0}
+{"level":"ERROR","time":"2020-11-22T08:59:03.545+0800","caller":"controllers/post.go:46","msg":"logic GetPostById(pid) failed","error":"missing destination name create_time in *models.Post"}
+{"level":"INFO","time":"2020-11-22T08:59:03.545+0800","caller":"logger/logger.go:75","msg":"/api/v1/post/4000658344644608","status":200,"method":"GET","path":"/api/v1/post/4000658344644608","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0009966}
+{"level":"INFO","time":"2020-11-22T09:00:08.817+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2020-11-22T09:00:08.818+0800","caller":"BBS/main.go:90","msg":"Server exiting"}
+{"level":"DEBUG","time":"2020-11-22T09:00:13.183+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"ERROR","time":"2020-11-22T09:00:15.527+0800","caller":"controllers/post.go:46","msg":"logic GetPostById(pid) failed","error":"missing destination name create_time in *models.Post"}
+{"level":"INFO","time":"2020-11-22T09:00:15.527+0800","caller":"logger/logger.go:75","msg":"/api/v1/post/4000658344644608","status":200,"method":"GET","path":"/api/v1/post/4000658344644608","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0019955}
+{"level":"INFO","time":"2020-11-22T09:01:19.342+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2020-11-22T09:01:19.343+0800","caller":"BBS/main.go:90","msg":"Server exiting"}
+{"level":"DEBUG","time":"2020-11-22T09:01:25.002+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"INFO","time":"2020-11-22T09:01:27.767+0800","caller":"logger/logger.go:75","msg":"/api/v1/post/4000658344644608","status":200,"method":"GET","path":"/api/v1/post/4000658344644608","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0009994}
+{"level":"INFO","time":"2020-11-22T10:51:53.479+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2020-11-22T10:51:53.481+0800","caller":"BBS/main.go:90","msg":"Server exiting"}
+{"level":"DEBUG","time":"2020-11-22T10:51:59.941+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"INFO","time":"2020-11-22T10:52:03.580+0800","caller":"logger/logger.go:75","msg":"/api/v1/post/4000658344644608","status":200,"method":"GET","path":"/api/v1/post/4000658344644608","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0079782}
+{"level":"INFO","time":"2020-11-22T14:13:51.632+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2020-11-22T14:13:51.637+0800","caller":"BBS/main.go:90","msg":"Server exiting"}
+{"level":"DEBUG","time":"2020-11-22T21:56:56.838+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"INFO","time":"2020-11-22T21:57:09.905+0800","caller":"logger/logger.go:75","msg":"/api/v1/post","status":200,"method":"GET","path":"/api/v1/post","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0}
+{"level":"INFO","time":"2020-11-22T21:57:15.076+0800","caller":"logger/logger.go:75","msg":"/api/v1/login","status":200,"method":"POST","path":"/api/v1/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0139562}
+{"level":"INFO","time":"2020-11-22T21:57:36.827+0800","caller":"logger/logger.go:75","msg":"/api/v1/post","status":200,"method":"GET","path":"/api/v1/post","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0039912}
+{"level":"INFO","time":"2020-11-22T22:05:29.561+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2020-11-22T22:05:29.562+0800","caller":"BBS/main.go:90","msg":"Server exiting"}
+{"level":"DEBUG","time":"2020-11-22T22:06:14.601+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"INFO","time":"2020-11-22T22:06:36.171+0800","caller":"logger/logger.go:75","msg":"/api/v1/post","status":200,"method":"POST","path":"/api/v1/post","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0009968}
+{"level":"INFO","time":"2020-11-22T22:06:48.794+0800","caller":"logger/logger.go:75","msg":"/api/v1/post","status":200,"method":"POST","path":"/api/v1/post","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0079781}
+{"level":"INFO","time":"2020-11-22T22:06:53.701+0800","caller":"logger/logger.go:75","msg":"/api/v1/post","status":200,"method":"POST","path":"/api/v1/post","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0029921}
+{"level":"INFO","time":"2020-11-22T22:06:56.883+0800","caller":"logger/logger.go:75","msg":"/api/v1/post","status":200,"method":"GET","path":"/api/v1/post","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0039895}
+{"level":"INFO","time":"2020-11-22T22:07:18.331+0800","caller":"logger/logger.go:75","msg":"/api/v1/post","status":200,"method":"GET","path":"/api/v1/post","query":"offset=0&limit=1","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0019951}
+{"level":"INFO","time":"2020-11-22T22:07:24.311+0800","caller":"logger/logger.go:75","msg":"/api/v1/post","status":200,"method":"GET","path":"/api/v1/post","query":"offset=0&limit=2","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0019941}
+{"level":"INFO","time":"2020-11-22T22:32:24.598+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2020-11-22T22:32:24.599+0800","caller":"BBS/main.go:90","msg":"Server exiting"}
+{"level":"DEBUG","time":"2020-11-23T07:27:55.852+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"DEBUG","time":"2020-11-23T07:28:17.679+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"INFO","time":"2020-11-23T07:28:35.827+0800","caller":"logger/logger.go:75","msg":"/api/v1/login","status":200,"method":"POST","path":"/api/v1/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0059847}
+{"level":"INFO","time":"2020-11-23T08:44:31.815+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}

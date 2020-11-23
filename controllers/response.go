@@ -8,7 +8,7 @@ import (
 type ResponseData struct {
 	Code MyCode `json:"code"`
 	Message interface{} `json:"msg"`
-	Data interface{} `json:"data"`
+	Data interface{} `json:"data,omitempty"`
 }
 func ResponseError(ctx *gin.Context, c MyCode) {
 	rd := &ResponseData{

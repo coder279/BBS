@@ -47,12 +47,16 @@ func LoginHandler(c *gin.Context){
 		return
 	}
 	//数据比对
-	token,err := logic.Login(&p)
+	user,err := logic.Login(&p)
 	if err != nil {
 		ResponseErrorWithMsg(c,CodeInvalidParams,err.Error())
 		return
 	}
 	//3.响应结果
-	ResponseSuccess(c,token)
+	ResponseSuccess(c,gin.H{
+		"user_id":fmt.Sprintf("%d",user.UserID),
+		"user_name":user.Username,
+		"token":user.Token,
+	})
 	return
 }

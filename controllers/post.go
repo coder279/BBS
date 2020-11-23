@@ -5,6 +5,7 @@ import (
 	"BBS/models"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"strconv"
 )
 
 func CreatePostHandler(c *gin.Context){
@@ -29,4 +30,39 @@ func CreatePostHandler(c *gin.Context){
 
 	//3.返回响应
 	ResponseSuccess(c,CodeSuccess)
+}
+
+func GetPostDetailHandler(c *gin.Context){
+	//1.获取帖子的id
+	pidStr := c.Param("id")
+	pid,err := strconv.ParseInt(pidStr,10,64)
+	if err != nil {
+		zap.L().Error(" get post detail with invalid param",zap.Error(err))
+		ResponseError(c,CodeInvalidParams)
+	}
+	//2.根据id取得帖子信息
+	data,err := logic.GetPostById(pid)
+	if err != nil {
+		zap.L().Error("logic GetPostById(pid) failed",zap.Error(err))
+		ResponseError(c,CodeServerBusy)
+		return
+	}
+	//3.返回数据
+	ResponseSuccess(c,data)
+	return
+
+}
+//获取帖子列表数据
+func GetPostListHandler(c *gin.Context){
+	//1.获取数据
+	offset,limit := getPageInfo(c)
+	data,err := logic.GetPostList(offset,limit)
+	if err != nil {
+		zap.L().Error("GetPostListHandler failed",zap.Error(err))
+		ResponseError(c,CodeServerBusy)
+		return
+	}
+	ResponseSuccess(c,data)
+	return
+
 }

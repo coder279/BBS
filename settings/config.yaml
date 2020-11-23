@@ -1,6 +1,6 @@
 app:
   name: "web_app"
-  mode: "realease"
+  mode: "dev"
   port: 8081
 
 log:
@@ -15,7 +15,7 @@ mysql:
   port: "3306"
   user: "root"
   password: "1234567"
-  dbname: "bluebell"
+  dbname: "bubble"
   max_idle_conns: 50
   max_open_conns: 200
 

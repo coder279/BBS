@@ -9,6 +9,14 @@ import (
 // 声明一个全局的rdb变量
 var rdb *redis.Client
 
+const (
+	KeyPrefix = "bbs:"
+	KeyPostTimeZset = "post:time"
+	KeyPostScoreZset = "post:score"
+
+	KeyPostVotedZsetPrefix = "post:voted:"
+	)
+
 // 初始化连接
 func Init(cfg *settings.RedisConfig) (err error) {
 	rdb = redis.NewClient(&redis.Options{
@@ -25,4 +33,8 @@ func Init(cfg *settings.RedisConfig) (err error) {
 
 func Close(){
 	_ = rdb.Close()
+}
+
+func getRedisKey(key string)string{
+	return KeyPrefix + key
 }
