@@ -8,6 +8,7 @@ import (
 	"strconv"
 )
 
+
 func CreatePostHandler(c *gin.Context){
 	//1.获取参数并校验
 	p := new (models.Post)
@@ -52,6 +53,30 @@ func GetPostDetailHandler(c *gin.Context){
 	return
 
 }
+//获取帖子列表数据
+func GetPostListHandler2(c *gin.Context){
+	p := models.ParamPostList{
+		Page:0,
+		Size:10,
+		Order:models.OrderTime,
+	}
+	if err := c.ShouldBind(&p);err != nil {
+		zap.L().Error("GetPostListHandler2 with invalid param",zap.Error(err))
+		ResponseError(c,CodeInvalidParams)
+		return
+	}
+
+	data,err := logic.GetPostList2(&p)
+	if err != nil {
+		zap.L().Error("GetPostListHandler failed",zap.Error(err))
+		ResponseError(c,CodeServerBusy)
+		return
+	}
+	ResponseSuccess(c,data)
+	return
+
+}
+
 //获取帖子列表数据
 func GetPostListHandler(c *gin.Context){
 	//1.获取数据

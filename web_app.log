@@ -406,3 +406,29 @@
 {"level":"INFO","time":"2020-11-24T21:36:11.594+0800","caller":"logger/logger.go:75","msg":"/api/v1/post","status":200,"method":"POST","path":"/api/v1/post","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0009951}
 {"level":"INFO","time":"2020-11-24T21:36:15.327+0800","caller":"logger/logger.go:75","msg":"/api/v1/login","status":200,"method":"POST","path":"/api/v1/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0229388}
 {"level":"INFO","time":"2020-11-24T21:36:33.224+0800","caller":"logger/logger.go:75","msg":"/api/v1/post","status":200,"method":"POST","path":"/api/v1/post","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0179518}
+{"level":"DEBUG","time":"2020-11-24T21:52:27.286+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"DEBUG","time":"2020-11-24T21:52:38.109+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"DEBUG","time":"2020-11-24T22:32:31.610+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"DEBUG","time":"2020-11-24T22:37:48.675+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"DEBUG","time":"2020-11-24T22:37:59.924+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"DEBUG","time":"2020-11-24T22:38:24.484+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"INFO","time":"2020-11-24T22:38:26.553+0800","caller":"logger/logger.go:75","msg":"/api/v1/login","status":200,"method":"POST","path":"/api/v1/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0029934}
+{"level":"INFO","time":"2020-11-24T22:38:58.922+0800","caller":"logger/logger.go:75","msg":"/api/v1/post2","status":200,"method":"GET","path":"/api/v1/post2","query":"page=0&size=10&order=time","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0079688}
+{"level":"INFO","time":"2020-11-24T22:39:09.326+0800","caller":"logger/logger.go:75","msg":"/api/v1/post2","status":200,"method":"GET","path":"/api/v1/post2","query":"page=1&size=10&order=time","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.004986}
+{"level":"INFO","time":"2020-11-24T22:39:18.028+0800","caller":"logger/logger.go:75","msg":"/api/v1/post2","status":200,"method":"GET","path":"/api/v1/post2","query":"page=2&size=10&order=time","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0049863}
+{"level":"INFO","time":"2020-11-24T22:40:13.734+0800","caller":"logger/logger.go:75","msg":"/api/v1/post2","status":200,"method":"GET","path":"/api/v1/post2","query":"page=2&size=5&order=time","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0060168}
+{"level":"INFO","time":"2020-11-24T22:40:20.682+0800","caller":"logger/logger.go:75","msg":"/api/v1/post2","status":200,"method":"GET","path":"/api/v1/post2","query":"page=2&size=1&order=time","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.005984}
+{"level":"INFO","time":"2020-11-24T22:42:22.109+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}
+{"level":"DEBUG","time":"2020-11-24T22:42:24.057+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"INFO","time":"2020-11-24T22:42:27.410+0800","caller":"logger/logger.go:75","msg":"/api/v1/post2","status":200,"method":"GET","path":"/api/v1/post2","query":"page=2&size=1&order=time","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0080048}
+{"level":"INFO","time":"2020-11-24T22:42:33.589+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}
+{"level":"DEBUG","time":"2020-11-24T22:42:56.971+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"INFO","time":"2020-11-24T22:42:59.682+0800","caller":"logger/logger.go:75","msg":"/api/v1/post2","status":200,"method":"GET","path":"/api/v1/post2","query":"page=2&size=1&order=time","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0029934}
+{"level":"WARN","time":"2020-11-24T22:43:23.310+0800","caller":"logic/post.go:52","msg":"redis.GetPostList2 return 0 data"}
+{"level":"INFO","time":"2020-11-24T22:43:23.310+0800","caller":"logger/logger.go:75","msg":"/api/v1/post2","status":200,"method":"GET","path":"/api/v1/post2","query":"page=2&size=1&order=score","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0}
+{"level":"INFO","time":"2020-11-24T22:44:36.161+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2020-11-24T22:44:36.161+0800","caller":"BBS/main.go:90","msg":"Server exiting"}
+{"level":"DEBUG","time":"2020-11-24T22:44:36.717+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"INFO","time":"2020-11-24T22:44:39.563+0800","caller":"logger/logger.go:75","msg":"/api/v1/post2","status":200,"method":"GET","path":"/api/v1/post2","query":"page=2&size=1&order=score","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0029921}
+{"level":"WARN","time":"2020-11-24T22:44:57.455+0800","caller":"logic/post.go:52","msg":"redis.GetPostList2 return 0 data"}
+{"level":"INFO","time":"2020-11-24T22:44:57.455+0800","caller":"logger/logger.go:75","msg":"/api/v1/post2","status":200,"method":"GET","path":"/api/v1/post2","query":"page=2&size=1&order=time","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0}
