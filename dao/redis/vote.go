@@ -11,13 +11,25 @@ const (
 	oneWeenkInSeconds = 7 * 24 * 3600
 	scorePervote = 432
 )
+var (
+	ErrVoteTimeExpire = errors.New("超出投票时间")
+)
 
+func CreatePost(id int64)(err error){
+	rdb.ZAdd(getRedisKey(KeyPostTimeZset),redis.Z{
+		Score:float64(time.Now().Unix()),
+		Member:id,
+	}).Result()
+	return
+}
 
 func VoteForPost(userID,postID string ,value float64) (err error) {
 	pipline := rdb.TxPipeline()
+	//取redis帖子发布时间
 	postTime := pipline.ZScore(getRedisKey(KeyPostTimeZset),postID).Val()
-	if float64(time.Now().Unix()) - postTime > oneWeenkInSeconds {
-		return errors.New("超出投票时间")
+	print(postTime)
+	if float64(time.Now().Unix()) - float64(postTime) < oneWeenkInSeconds {
+		return ErrVoteTimeExpire
 	}
 	ov := pipline.ZScore(getRedisKey(KeyPostVotedZsetPrefix+postID),userID).Val()
 	var dir float64
@@ -39,3 +51,5 @@ func VoteForPost(userID,postID string ,value float64) (err error) {
 	return nil
 
 }
+
+

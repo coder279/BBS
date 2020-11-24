@@ -7,7 +7,10 @@ import (
 )
 
 // 声明一个全局的rdb变量
-var rdb *redis.Client
+var (
+	rdb *redis.Client
+	Nil = redis.Nil
+	)
 
 const (
 	KeyPrefix = "bbs:"

@@ -11,7 +11,7 @@ import (
 func PostVoteHandler(c *gin.Context){
 	//1.参数校验
 	p := new(models.ParamVoteData)
-	if err := c.ShouldBindJSON(p);err != nil {
+	if err := c.ShouldBindJSON(p);err == nil {
 		errs,ok := err.(validator.ValidationErrors)
 		if !ok {
 			ResponseError(c,CodeInvalidParams)
@@ -29,7 +29,7 @@ func PostVoteHandler(c *gin.Context){
 	}
 	//具体投票业务逻辑
 	if err := logic.VoteForPost(userID,p);err != nil {
-		zap.L().Error("logic.VoteForPost")
+		zap.L().Error("logic.VoteForPost",zap.Error(err))
 		ResponseError(c,CodeServerBusy)
 		return
 	}

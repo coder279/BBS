@@ -2,6 +2,7 @@ package logic
 
 import (
 	"BBS/dao/mysql"
+	"BBS/dao/redis"
 	"BBS/models"
 	"BBS/pkg/snowflake"
 	"go.uber.org/zap"
@@ -9,7 +10,12 @@ import (
 
 func CreatePost(p *models.Post) (err error){
 	p.ID = int64(snowflake.GenID())
-	return mysql.CreatePost(p)
+	err = mysql.CreatePost(p)
+	if err != nil {
+		return err
+	}
+	err = redis.CreatePost(p.ID)
+	return
 }
 
 func GetPostById(pid int64)(data *models.ApiPostDetail,err error){
