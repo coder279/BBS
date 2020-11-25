@@ -65,12 +65,9 @@ func GetPostListHandler2(c *gin.Context){
 		ResponseError(c,CodeInvalidParams)
 		return
 	}
-
-	data,err := logic.GetPostList2(&p)
+	data,err := logic.GetPostListNew(&p)
 	if err != nil {
-		zap.L().Error("GetPostListHandler failed",zap.Error(err))
-		ResponseError(c,CodeServerBusy)
-		return
+		return 
 	}
 	ResponseSuccess(c,data)
 	return
@@ -91,3 +88,27 @@ func GetPostListHandler(c *gin.Context){
 	return
 
 }
+//func GetCommunityPostListHandler(c *gin.Context){
+//	p := &models.ParamCommunityPostList{
+//		ParamPostList:&models.ParamPostList{
+//			Page:1,
+//			Size:10,
+//			Order:models.OrderTime,
+//		},
+//	}
+//	if err := c.ShouldBind(&p);err != nil {
+//		zap.L().Error("ParamCommunityPostList with invalid param",zap.Error(err))
+//		ResponseError(c,CodeInvalidParams)
+//		return
+//	}
+//
+//	data,err := logic.GetCommunityPostList(p)
+//	if err != nil {
+//		zap.L().Error("ParamCommunityPostList failed",zap.Error(err))
+//		ResponseError(c,CodeServerBusy)
+//		return
+//	}
+//	ResponseSuccess(c,data)
+//	return
+//
+//}

@@ -14,7 +14,7 @@ func CreatePost(p *models.Post) (err error){
 	if err != nil {
 		return err
 	}
-	err = redis.CreatePost(p.ID)
+	err = redis.CreatePost(p.ID,p.CommunityID)
 	return
 }
 
@@ -57,7 +57,12 @@ func GetPostList2(list *models.ParamPostList)(data []*models.ApiPostDetail,err e
 	if err != nil {
 		return
 	}
-	for _,post := range posts{
+	//提前查询好每个帖子的投票数
+	voteData,err := redis.GetPostVoteData(ids)
+	if err != nil {
+		return
+	}
+	for idx,post := range posts{
 		user,err := mysql.GetUserById(post.AuthorID)
 		if  err != nil {
 			zap.L().Error("mysql GetUserById failed",zap.Error(err))
@@ -70,6 +75,7 @@ func GetPostList2(list *models.ParamPostList)(data []*models.ApiPostDetail,err e
 		}
 		postDetail := &models.ApiPostDetail{
 			AuthorNmae:	user.Username,
+			VoteNum: voteData[idx],
 			Post:	post,
 			CommunityDetail:	community,
 		}
@@ -104,5 +110,60 @@ func GetPostList(offset int64,limit int64)(data []*models.ApiPostDetail,err erro
 	}
 	return
 
+}
+
+func GetCommunityPostList(p *models.ParamPostList)(data []*models.ApiPostDetail,err error){
+	ids,err := redis.GetCommunityPostIDsInOrder(p)
+	if err != nil {
+		return
+	}
+	if len(ids) == 0 {
+		zap.L().Warn("redis.GetPostList2 return 0 data")
+		return
+	}
+	//根据ids去数据库查询帖子操作
+	posts,err := mysql.GetPostListByIDs(ids)
+	if err != nil {
+		return
+	}
+	//提前查询好每个帖子的投票数
+	voteData,err := redis.GetPostVoteData(ids)
+	if err != nil {
+		return
+	}
+	for idx,post := range posts{
+		user,err := mysql.GetUserById(post.AuthorID)
+		if  err != nil {
+			zap.L().Error("mysql GetUserById failed",zap.Error(err))
+			continue
+		}
+		community,err := mysql.GetCommunityDetailById(post.CommunityID)
+		if  err != nil {
+			zap.L().Error("mysql GetCommunityById failed",zap.Error(err))
+			continue
+		}
+		postDetail := &models.ApiPostDetail{
+			AuthorNmae:	user.Username,
+			VoteNum: voteData[idx],
+			Post:	post,
+			CommunityDetail:	community,
+		}
+		data = append(data,postDetail)
+	}
+	return
+}
+
+func GetPostListNew(p *models.ParamPostList)(data []*models.ApiPostDetail,err error){
+	if p.CommunityID == 0 {
+		data,err = GetPostList2(p)
+
+	}else{
+		data,err = GetCommunityPostList(p)
+	}
+	if err != nil {
+		zap.L().Error("logic GetPostListNew failed",zap.Error(err))
+		return nil,err
+	}
+	return
 }
 

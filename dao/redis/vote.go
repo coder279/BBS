@@ -15,19 +15,21 @@ const (
 )
 var (
 	ErrVoteTimeExpire = errors.New("超出投票时间")
+	ErrVoteRepeat = errors.New("不允许重复投票")
 )
 
-func CreatePost(id int64)(err error){
+func CreatePost(id,communityID int64)(err error){
 	pipline := rdb.TxPipeline()
 	pipline.ZAdd(getRedisKey(KeyPostTimeZset),redis.Z{
 		Score:float64(time.Now().Unix()),
 		Member:id,
 	}).Result()
-
+	//待完善
 	pipline.ZAdd(getRedisKey(KeyPostScoreZset),redis.Z{
 		Score:float64(time.Now().Unix()),
 		Member:id,
 	}).Result()
+	ckey := getRedisKey(KeyCommunitySetPF+strconv.Itoa(int(communityID)))
 	_,err = pipline.Exec()
 	return
 }
@@ -42,6 +44,9 @@ func VoteForPost(userID,postID string ,value float64) (err error) {
 	}
 	ov := pipline.ZScore(getRedisKey(KeyPostVotedZsetPrefix+postID),userID).Val()
 	var dir float64
+	if value == ov{
+		return ErrVoteRepeat
+	}
 	if value > ov {
 		dir = 1
 	} else {

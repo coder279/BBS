@@ -14,6 +14,7 @@ type Post struct {
 
 type ApiPostDetail struct {
 	AuthorNmae string //
+	VoteNum int64 `json:"vote_num"`
 	*Post //帖子信息
 	*CommunityDetail `json:"community"` //嵌入社区内容
 }

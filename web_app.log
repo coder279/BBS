@@ -432,3 +432,11 @@
 {"level":"INFO","time":"2020-11-24T22:44:39.563+0800","caller":"logger/logger.go:75","msg":"/api/v1/post2","status":200,"method":"GET","path":"/api/v1/post2","query":"page=2&size=1&order=score","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0.0029921}
 {"level":"WARN","time":"2020-11-24T22:44:57.455+0800","caller":"logic/post.go:52","msg":"redis.GetPostList2 return 0 data"}
 {"level":"INFO","time":"2020-11-24T22:44:57.455+0800","caller":"logger/logger.go:75","msg":"/api/v1/post2","status":200,"method":"GET","path":"/api/v1/post2","query":"page=2&size=1&order=time","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.26.8","errors":"","cost":0}
+{"level":"DEBUG","time":"2020-11-24T23:00:44.582+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"INFO","time":"2020-11-24T23:59:50.970+0800","caller":"BBS/main.go:81","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2020-11-24T23:59:50.970+0800","caller":"BBS/main.go:90","msg":"Server exiting"}
+{"level":"DEBUG","time":"2020-11-25T08:17:59.869+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"DEBUG","time":"2020-11-25T08:18:18.729+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"DEBUG","time":"2020-11-25T08:18:27.005+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"DEBUG","time":"2020-11-25T08:18:35.618+0800","caller":"BBS/main.go:35","msg":"logger init success"}
+{"level":"DEBUG","time":"2020-11-25T08:19:31.647+0800","caller":"BBS/main.go:35","msg":"logger init success"}

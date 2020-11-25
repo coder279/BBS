@@ -16,8 +16,8 @@ const (
 	KeyPrefix = "bbs:"
 	KeyPostTimeZset = "post:time"
 	KeyPostScoreZset = "post:score"
-
 	KeyPostVotedZsetPrefix = "post:voted:"
+	KeyCommunitySetPF = "community:"
 	)
 
 // 初始化连接
