@@ -22,36 +22,36 @@ import (
 
 func main() {
 	//1. 加载配置
-	if err := settings.Init(); err != nil{
-		fmt.Printf("init settings failed,%#v\n",err)
+	if err := settings.Init(); err != nil {
+		fmt.Printf("init settings failed,%#v\n", err)
 		return
 	}
 	//2. 初始化日志
-	if err := logger.Init(); err != nil{
-		fmt.Printf("init settings failed,%#v\n",err)
+	if err := logger.Init(); err != nil {
+		fmt.Printf("init settings failed,%#v\n", err)
 		return
 	}
 	defer zap.L().Sync()
 	zap.L().Debug("logger init success")
 	//3. 初始化Mysql
-	if err := mysql.Init(settings.Conf.MySQLConfig); err != nil{
-		fmt.Printf("mysql init settings failed,%#v\n",err)
+	if err := mysql.Init(settings.Conf.MySQLConfig); err != nil {
+		fmt.Printf("mysql init settings failed,%#v\n", err)
 		return
 	}
 	defer mysql.Close()
 	//4. 初始化Redis
-	if err := redis.Init(settings.Conf.RedisConfig); err != nil{
-		fmt.Printf("redis init settings failed,%#v\n",err)
+	if err := redis.Init(settings.Conf.RedisConfig); err != nil {
+		fmt.Printf("redis init settings failed,%#v\n", err)
 		return
 	}
 	defer redis.Close()
-	if err := snowflake.Init(settings.Conf.StartTime,settings.Conf.MachineID);err != nil {
-		fmt.Printf("snowflake init settings failed,%#v\n",err)
+	if err := snowflake.Init(settings.Conf.StartTime, settings.Conf.MachineID); err != nil {
+		fmt.Printf("snowflake init settings failed,%#v\n", err)
 		return
 	}
 	//初始化gin框架内置的校验器使用翻译器
-	if err := controllers.InitTrans("zh");err != nil {
-		fmt.Printf("init init trans failed,err:%v\n",err)
+	if err := controllers.InitTrans("zh"); err != nil {
+		fmt.Printf("init init trans failed,err:%v\n", err)
 		return
 	}
 	//5. 注册路由
@@ -59,7 +59,7 @@ func main() {
 	//6. 启动服务 (优雅关机)
 
 	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%d",viper.GetInt("app.port")),
+		Addr:    fmt.Sprintf(":%d", viper.GetInt("app.port")),
 		Handler: r,
 	}
 
@@ -76,8 +76,8 @@ func main() {
 	// kill -2 发送 syscall.SIGINT 信号，我们常用的Ctrl+C就是触发系统SIGINT信号
 	// kill -9 发送 syscall.SIGKILL 信号，但是不能被捕获，所以不需要添加它
 	// signal.Notify把收到的 syscall.SIGINT或syscall.SIGTERM 信号转发给quit
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)  // 此处不会阻塞
-	<-quit  // 阻塞在此，当接收到上述两种信号时才会往下执行
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM) // 此处不会阻塞
+	<-quit                                               // 阻塞在此，当接收到上述两种信号时才会往下执行
 	zap.L().Info("Shutdown Server ...")
 	// 创建一个5秒超时的context
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -89,4 +89,3 @@ func main() {
 
 	zap.L().Info("Server exiting")
 }
-

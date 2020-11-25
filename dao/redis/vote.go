@@ -29,7 +29,6 @@ func CreatePost(id,communityID int64)(err error){
 		Score:float64(time.Now().Unix()),
 		Member:id,
 	}).Result()
-	ckey := getRedisKey(KeyCommunitySetPF+strconv.Itoa(int(communityID)))
 	_,err = pipline.Exec()
 	return
 }
