@@ -23,6 +23,7 @@ func Init() (err error) {
 	writeSyncer := getLogWriter(viper.GetString("log.filename"), viper.GetInt("log.max_size"), viper.GetInt("log.max_backups"), viper.GetInt("log.max_age"))
 	encoder := getEncoder()
 	var l = new(zapcore.Level)
+	//将这个库解析成原子级别的，例如debug info warn error这种级别的byte
 	err = l.UnmarshalText([]byte(viper.GetString("log.level")))
 	if err != nil {
 		return

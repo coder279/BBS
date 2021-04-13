@@ -45,17 +45,17 @@ type LogConfig struct {
 }
 
 func Init()(err error){
-	viper.SetConfigFile("./settings/config.yaml")
-	err = viper.ReadInConfig()
+	viper.SetConfigFile("./settings/config.yaml") //设置文件目录
+	err = viper.ReadInConfig()					  //读取配置
 	if err != nil {
 		fmt.Printf("viper ReadConfig() failed, err:%v\n",err)
 		return
 	}
-	viper.Unmarshal(&Conf)
-	viper.WatchConfig()
+	viper.Unmarshal(&Conf)                        //解析配置
+	viper.WatchConfig()                           //监控配置
 	viper.OnConfigChange(func(in fsnotify.Event) {
 		fmt.Println("配置文件修改了...")
-		if err := viper.Unmarshal(&Conf); err != nil {
+		if err := viper.Unmarshal(&Conf); err != nil { //重新解析
 			panic(fmt.Errorf("unmarshal to Conf failed, err:%v", err))
 		}
 	})
